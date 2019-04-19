@@ -37,3 +37,12 @@ instance.interceptors.response.use(
     }
   }
 )
+
+export default {
+  api_admin_reg(data){
+    return instance.post('/api/admin/reg', data)
+  },
+  api_admin_login(data){
+    return instance.post('/api/admin/login', data)
+  }
+}

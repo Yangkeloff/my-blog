@@ -5,7 +5,7 @@
         <img src="../assets/img/avatar.png" alt="admin avatar">
       </div>
       <div class="name">
-        yang
+        {{this.$store.state.adminInfo.admin_name}}
       </div>
     </div>
     <ul class="nav">
@@ -53,6 +53,7 @@ export default {
     margin 0
     height 100%
     li
+      list-style none
       a 
         text-align center
         display block
