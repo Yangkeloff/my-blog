@@ -39,10 +39,29 @@ instance.interceptors.response.use(
 )
 
 export default {
+  //用户
   api_admin_reg(data){
     return instance.post('/api/admin/reg', data)
   },
   api_admin_login(data){
     return instance.post('/api/admin/login', data)
-  }
+  },
+  //标签
+  api_get_tags(){
+    return instance.get("/api/admin/tags/get");
+  },
+  api_add_tags(data){
+    return instance.post('/api/admin/tags/add',data)
+  },
+  api_alter_tags(data){
+    return instance.patch(`/api/admin/tags/edit/${data._id}`,data)
+  },
+  api_del_tags(data){
+    return instance.delete(`/api/admin/tags/del/${data._id}`,data)
+  },
+
+  //文章
+  api_add_article(data){
+    return instance.post('/api/admin/article/add', data);
+  },
 }

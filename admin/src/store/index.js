@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import tags from './modules/tag'
+import tag from './modules/tag'
 Vue.use(Vuex)
 
 const state = {
@@ -35,7 +35,7 @@ const mutations = {
 
 export default new Vuex.Store({
   modules: {
-    tags
+    tag
   },
   state,
   actions,

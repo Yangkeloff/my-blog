@@ -48,7 +48,12 @@
 import SimpleMDE from 'simplemde'
 import '../assets/css/simplemde.min.css'
 import '../assets/css/markdown.css'
+
+let simplemde = null
 export default {
+  created(){
+    this.init_page()
+  },
   data() {
     return {
       article: {
@@ -61,7 +66,12 @@ export default {
         article_tags: [],
         article_title: '',
         article_update_time: ''
-      }
+      },
+      article_info: {
+        cover: ''
+      },
+      article_content:'',
+      timer: 0
     }
   },
   directives: {
@@ -73,17 +83,101 @@ export default {
        document.getElementsByClassName('editor-preview-side')[0].classList.add('markdown-body')
       }
     }
-  }
-  // computed: {
-  //   tag_list() {
-  //     return this.$store.state.tag.data
-  //   },
-  //   select_tag() {
-  //     return this.article.article_tags.map( item => {
-  //       return item._id
-  //     })
-  //   }
-  // },
+  },
+  computed: {
+    tag_list() {
+      return this.$store.state.tag.data
+    },
+    select_tag() {
+      return this.article.article_tags.map( item => {
+        return item._id
+      })
+    }
+  },
+  methods: {
+    getFile(e){
+      let _self = this
+      let obj = e.target || null
+      let fileName = obj.files[0].name
+      if(fileName.slice(fileName.lastIndexOf(".")+1).toLowerCase() != 'md'){
+        alert("请上传markdown的文件！")
+        return
+      }
+      let fileReader = new FileReader()
+      fileReader.readAsText(obj.files[0])
+      
+      fileReader.onload = function () {
+        let result = this.result
+        try {
+          // 缓存 
+          simplemde.value(result)
+        }
+        catch (e) {
+          console.log("Storage failed: " + e)
+        }
+      }
+    },
+    async save(){
+      this.article.article_content = simplemde.value()
+      let res
+      if(this.article._id != ''){
+        res = await this.$http.api_alter_article(this.article)
+      }else {
+        res = await this.$http.api_add_article(this.article)
+      }
+      let {code, msg, data = []} = res.data
+      alert(msg)
+      if(code == 200){
+        if(this.article._id == ''){
+          localStorage.removeItem("tempData")
+        }
+        // 跳转到文章列表
+        this.$router.push('/admin/article')
+      }
+    },
+    auto_save(){
+      this.timer = setInterval(()=>{
+        let tempData = {
+          article_title: this.article.article_title,
+          article_tags: this.article.article_tags,
+          article_state: this.article.article_state,
+          article_cover: this.article.article_cover,
+          article_content: simplemde.value()
+        }
+        localStorage.setItem("tempData",JSON.stringify(tempData))
+      },10000)
+    },
+    async init_page(){
+      this.$store.dispatch('getTags')
+      let {id = ''} = this.$route.params
+      if(id != ''){
+        let res = await this.$http.api_get_article(id)
+        let {code, msg, data =[]} = res.data
+        if(code == 200 && data.length != 0){
+          this.article = data[0]
+          this.article.article_tags = this.article.article_tags.map( item => {
+            return item._id
+          })
+          simplemde.value(this.article.article_content)
+        }
+      }else {
+        let tempData = JSON.parse(localStorage.getItem("tempData"))
+        if(tempData != null){
+          this.article.article_title = tempData.article_title || ''
+          this.article.article_tags = tempData.article_tags || []
+          this.article.article_state = tempData.article_state || ''
+          this.article.article_cover = tempData.article_cover || ''
+          this.article.article_content = tempData.article_content || ''
+        }
+        this.article._id = ''
+        this.article.article_create_time = ''
+        this.article.article_update_time = ''
+        simplemde.value('')
+        // 添加到自动保存
+        this.auto_save()
+      }
+    }
+  },
 }
 </script>
 
@@ -121,7 +215,7 @@ export default {
     .article_input
         margin 0 5px
         padding 5px
-        width 350px;
+        width 350px
         line-height 150%
         outline none
         border none
@@ -144,18 +238,7 @@ export default {
       box-sizing border-box
     button
     label 
-      background-color bgColor
-      font-size 14px
-      color text-light
-      width 80px
-      height 30px
-      line-height 30px
-      border none
-      outline none
-      margin 0 10px
-      cursor pointer
-      &:active 
-        opacity 0.8
+     btn-dark()
     input
       opacity 0
       position relative
