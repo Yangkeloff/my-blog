@@ -51,6 +51,13 @@ const routes = [
           requiresAuth:true
         },
         component: () => import('@/views/New')
+      },
+      {
+        path: 'new/:id',
+        meta:{
+          requiresAuth:true
+        },
+        component: () => import('@/views/New')
       }
     ]
   }

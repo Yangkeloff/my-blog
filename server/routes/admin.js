@@ -13,4 +13,8 @@ router
   .patch('/tags/edit/:id', controller.article.edit_tag)
   .delete('/tags/del/:id', controller.article.del_tag)
   .post('/article/add', controller.article.add_article)
+  .get('/article/list', controller.article.get_article_list)
+  .get('/article/get/:id', controller.article.get_article)
+  .patch('/article/edit/:id', controller.article.edit_article)
+  .delete('/article/del/:id', controller.article.del_article)
 module.exports = router

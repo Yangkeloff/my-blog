@@ -30,7 +30,7 @@ instance.interceptors.response.use(
     if(response.status == 401) {
       store.commit("adminLogout")  // token过期,清除
       router.replace({ //跳转到登录页面
-          path: '/admin/login',
+          path: '/login',
           query: { redirect: router.currentRoute.fullPath }
       }) 
       return Promise.reject(error.response) 
@@ -63,5 +63,15 @@ export default {
   //文章
   api_add_article(data){
     return instance.post('/api/admin/article/add', data);
+  },
+  api_get_article_list(data){
+    return instance.get(`/api/admin/article/list?current_page=${data.current_page}&page_size=${data.page_size}&keyword=${data.keyword}&tag=${data.tag}&state=${data.state}`)
+  },
+  // 通过文章id来获取文章
+  api_get_article(id){
+    return instance.get(`/api/admin/article/get/${id}`);
+  },
+  api_del_article(id){
+    return instance.delete(`/api/admin/article/del/${id}`);
   },
 }
