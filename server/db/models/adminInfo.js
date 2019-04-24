@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // 管理员表
-let AdminSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
   admin_name: String,
   admin_pwd: String, 
   token: {
@@ -10,4 +10,22 @@ let AdminSchema = new mongoose.Schema({
   }, 
 })
 
+// 全局设置表
+const settingSchema = new mongoose.Schema({
+  myInfo:{
+    about_me_page: String
+  },
+  website_cover:{
+	  home: String,
+    production: String,
+    archives: String,
+    about: String
+  },
+  other: {
+    ICP:String, 
+    blog_website:String 
+  }
+})
+
 exports.Admin = mongoose.model('Admin', AdminSchema)
+exports.Setting = mongoose.model('Setting', settingSchema)

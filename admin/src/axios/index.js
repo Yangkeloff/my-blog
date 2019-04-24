@@ -74,4 +74,17 @@ export default {
   api_del_article(id){
     return instance.delete(`/api/admin/article/del/${id}`);
   },
+
+  //设置
+  // 获取全局设置
+  api_get_setting(){
+    return instance.get('/api/admin/setting/get');
+  },
+  // 修改全局设置
+  api_alter_setting(data){
+    return instance.patch('/api/admin/setting/edit', data);
+  },
+  api_alter_admin(data) {
+    return instance.patch('/api/admin/edit', data);
+  },
 }

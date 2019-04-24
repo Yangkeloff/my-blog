@@ -8,6 +8,7 @@ router
   })
   .post('/reg', controller.admin.api_admin_reg)
   .post('/login', controller.admin.api_admin_login)
+  .patch('/edit', controller.admin.edit_admin)
   .get('/tags/get', controller.article.get_tags)
   .post('/tags/add', controller.article.add_tag)
   .patch('/tags/edit/:id', controller.article.edit_tag)
@@ -17,4 +18,6 @@ router
   .get('/article/get/:id', controller.article.get_article)
   .patch('/article/edit/:id', controller.article.edit_article)
   .delete('/article/del/:id', controller.article.del_article)
+  .get('/setting/get', controller.setting.get_setting)
+  .patch('/setting/edit', controller.setting.edit_setting)
 module.exports = router

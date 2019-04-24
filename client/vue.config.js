@@ -8,7 +8,8 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        'style': resolve('src/assets/stylus')
       }
     }
   },
