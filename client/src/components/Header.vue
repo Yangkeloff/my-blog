@@ -30,9 +30,8 @@ export default {
   height 60px
   line-height 60px
   top 0
-  left 0 
-  font-size 14px
-  background-color bgColor
+  left 0
+  background-color transparent-bg
   transition background-color .3s
   z-index 1000
   .header_page
@@ -58,9 +57,8 @@ export default {
         color text-light
         .item 
           display inline-block
+          font-size 16px
           a
-            color text-light
-            text-decoration none 
             padding 0 15px
             transition color .4s
             height 60px

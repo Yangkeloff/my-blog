@@ -411,5 +411,5 @@ module.exports = {
         msg: '查询失败！'
       }
     }
-  }
+  },
 }
