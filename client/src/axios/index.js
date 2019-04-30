@@ -38,7 +38,7 @@ export default {
   },
   // 获取设置
   api_get_setting(){
-    return instance.get('/api/client/setting')
+    return instance.get('/api/client/get_setting')
   },
   // 获取归档列表
   api_get_archives(){

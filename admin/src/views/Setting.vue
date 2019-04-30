@@ -81,14 +81,14 @@ export default {
     let res = await this.$http.api_get_setting()
     let {code, msg, data} = res.data
     if(code != 200){
-      alert(msg)
+      this.$alert(msg)
       return
     }
     this.myInfo = data[0].myInfo
-    this.website_cover = data[0].website_cover
-    this.other = data[0].other
+    this.website_cover = data[0].website_cover == null? this.website_cover: data[0].website_cover 
+    this.other = data[0].other == null ? this.other: data[0].other
 
-    this.admin_pwd.admin_id = this.$store.state.adminInfo.admin_id
+    this.admin_pwd.admin_name = this.$store.state.adminInfo.admin_name
   },
   data () {
     return {
@@ -109,7 +109,7 @@ export default {
         blog_website: ''
       },
       admin_pwd: {
-        admin_id: '', 
+        admin_name: '', 
         ori_pwd: '', 
         new_pwd: '', 
         re_pwd: ''
@@ -130,7 +130,7 @@ export default {
     async alter(json){
       let res = await this.$http.api_alter_setting(json)
       let {code, msg} = res.data
-      alert(msg)
+      this.$alert(msg)
     },
     alter_myInfo_content(name,data){
       this.layer_md_name = name
@@ -143,19 +143,21 @@ export default {
     },
     async alter_admin_pwd(){
       if(this.admin_pwd.ori_pwd == '' || this.admin_pwd.new_pwd == '' || this.admin_pwd.re_pwd == ''){
-        alert("请填写完信息！")
+        this.$alert("请填写完信息！")
         return
       }
       if(this.admin_pwd.new_pwd != this.admin_pwd.re_pwd){
-        alert('2次密码输入不一致，请重新输入!')
+        this.$alert('2次密码输入不一致，请重新输入!')
         return
       }
       let res = await this.$http.api_alter_admin(this.admin_pwd)
       let {code,msg} = res.data
-      alert(msg)
+      this.$alert(msg)
     }
   },
-  components:{LayerMD},
+  components: {
+    LayerMD
+  },
   computed: {
     parse_about_me_page: function () {
       return this.myInfo.about_me_page.replace(/\n/g,'<br/>')
@@ -164,7 +166,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .setting_page 
   .form 
     .title 

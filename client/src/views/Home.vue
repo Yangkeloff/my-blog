@@ -2,8 +2,8 @@
   <div>
     <Header></Header>
     <main class="home">
-      <BgImg></BgImg>
-      <router-view class="content"></router-view>
+      <BgImg :page="page"></BgImg>
+      <router-view class="content" @pageChanged="pageChanged"></router-view>
     </main>
     <Footer></Footer>
   </div>  
@@ -14,11 +14,21 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BgImg from '@/components/Bg_img'
 export default {
+  data() {
+    return {
+      page: 'home'
+    }
+  },
   components: {
     Header,
     BgImg,
     Footer
-  }
+  },
+  methods: {
+    pageChanged(name) {
+      this.page = name
+    }
+  },
 }
 </script>
 

@@ -13,18 +13,23 @@ const routes = [
     children: [
       {
         path: 'article-list',
+        name: 'home',
         component: () => import('@/views/ArticleList')
       },{
         path: 'article/:id',
+        name: 'article',
         component: () => import('@/views/ArticlePage')
       },{
         path: 'works',
+        name: 'production',
         component: () => import('@/views/Works')
       },{
         path: 'archives',
+        name: 'archives',
         component: () => import('@/views/Archives')
       },{
         path: 'about',
+        name: 'about',
         component: () => import('@/views/About')
       }
     ]

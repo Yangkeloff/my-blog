@@ -5,19 +5,12 @@ const {judge_source} = require('../utils/token')
 module.exports = {
   async get_setting(ctx, next) {
     try {
-      let res = []
-      let mark = await judge_source(ctx)
-      if(mark){
-        res = await Setting.find({})
-      }else {
-        res = await Setting.find({},{'qiniu.SECRET_KEY':false})
-      }
+      let res = await Setting.find({})
       ctx.body = {
         code: 200,
         msg: '获取设置成功!',
         data: res
       }
-  
     } catch (e) {
       console.log(e)
       ctx.body = {
@@ -30,11 +23,10 @@ module.exports = {
     let {
       myInfo = null,
       website_cover = null,
-      qiniu = null,
       other = null
     } = ctx.request.body
     let setJson = {}
-  
+    global.console.log(myInfo,website_cover,other)
     try {
       // 如果数据库中没有数据，创建一个数据
       let res = await Setting.find({})

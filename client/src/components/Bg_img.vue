@@ -1,7 +1,7 @@
 <template>
   <div class="bg_img" :style='"background-image:url("+bg_url+");"'>
       <div class="box">
-        <p class="bg_img_title">yang ' s Blog</p>
+        <p class="bg_img_title">Yang ' s Blog</p>
         <hr/>
         <p class="bg_img_desc">分享学习经历，学习前端知识</p>
       </div>
@@ -10,10 +10,16 @@
 
 <script>
 export default {
+  props: [
+    'page'
+  ],
+  created() {
+    this.$store.dispatch('get_setting_api')
+  },
   computed: {
     bg_url(){
       let img_url = this.$store.state.setting.data[0]
-      return img_url==null?"":img_url.website_cover.home
+      return img_url == null ? "": img_url.website_cover.home
     }
   },
 }
@@ -27,12 +33,15 @@ export default {
   height 350px
   text-align center
   box-sizing border-box
+  background-position center
+  background-size 100% auto
+  margin-bottom 40px
   .box
     flex 1
     position relative
     top 40%
     .bg_img_title
-      font-size 0.8rem
+      font-size 2rem
       font-weight bold
     hr 
       width 120px

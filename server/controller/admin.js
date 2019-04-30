@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Admin = require('../db/models/adminInfo').Admin
+const sha1 = require('sha1')
+const SHA1_ADD_STR = "yang_blog_encrypted_string"
 const adminQuery = require('../db/query/admin')
 const {
   create_token
@@ -32,7 +34,7 @@ module.exports = {
       let token = create_token(admin_name)
       let admin = new Admin({
         admin_name,
-        admin_pwd,
+        admin_pwd: sha1(sha1(admin_pwd + SHA1_ADD_STR)),
         token
       })
       res = await admin.save()
@@ -121,7 +123,6 @@ module.exports = {
         }
         return
       }
-
       let res = await adminQuery.find_by_admin_name(admin_name)
       if (res.length == 0) {
         ctx.body = {
@@ -130,7 +131,6 @@ module.exports = {
         }
         return
       }
-
       if (res[0].admin_pwd == sha1(sha1(ori_pwd + SHA1_ADD_STR))) {
         res = await adminQuery.update(res[0]._id, {
           admin_pwd: sha1(sha1(re_pwd + SHA1_ADD_STR))

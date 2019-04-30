@@ -6,7 +6,17 @@
 
 <script>
 export default {
-  
+  data() {
+    return {
+      
+    }
+  },
+  created() {
+    this.$emit('pageChanged', this.$route.name)
+  },
+  methods: {
+    
+  },
 }
 </script>
 

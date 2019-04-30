@@ -43,6 +43,7 @@ export default {
     }
     this.$store.dispatch('get_tag_api')
     this.get_article()
+    this.$emit('pageChanged', this.$route.name)
   },
   data() {
     return {
@@ -120,6 +121,7 @@ export default {
     .search_some
       clear both
       padding-left 20px
+      font-size 18px
     .article_list 
       margin-bottom 20px
       overflow hidden

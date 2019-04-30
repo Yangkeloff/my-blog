@@ -39,31 +39,33 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @import '~asset/stylus/base.styl'
-  .layer_md 
-    position fixed
-    left 0
-    top 0
-    width 100%
-    height 100%
-    background-color rgba(0,0,0,0.6)
-    min-width 1200px
-    .box
-      background-color text-light
-      width 800px
-      overflow auto
-      margin 100px auto
-      resize horizontal
-    .CodeMirror-scroll 
-      height 330px
-    .CodeMirror-fullscreen .CodeMirror-scroll
-      max-height 100%
-      height 100%  
-    .layer_md_tool 
-      border-top 1px solid #ddd
-      padding 10px
-      text-align right
-      button + button 
-        margin-left 20px !important
+.layer_md 
+  position fixed
+  left 0
+  top 0
+  width 100%
+  height 100%
+  background-color rgba(0,0,0,0.6)
+  min-width 1200px
+  .box
+    background-color text-light
+    width 800px
+    overflow auto
+    margin 100px auto
+    resize horizontal
+  .CodeMirror-scroll 
+    height 330px
+  .CodeMirror-fullscreen .CodeMirror-scroll
+    max-height 100%
+    height 100%  
+  .layer_md_tool 
+    border-top 1px solid #ddd
+    padding 10px
+    text-align right
+    button + button 
+      margin-left 20px !important
+    .btn
+      btn-dark()
 </style>
