@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <main class="home">
-      <BgImg :page="page"></BgImg>
+      <BgImg :page="page" :key="bgKey"></BgImg>
       <router-view class="content" @pageChanged="pageChanged"></router-view>
     </main>
     <Footer></Footer>
@@ -16,7 +16,8 @@ import BgImg from '@/components/Bg_img'
 export default {
   data() {
     return {
-      page: 'home'
+      page: 'home',
+      bgKey: 1
     }
   },
   components: {
@@ -27,6 +28,7 @@ export default {
   methods: {
     pageChanged(name) {
       this.page = name
+      ++this.bgKey
     }
   },
 }

@@ -19,7 +19,7 @@ export default {
   computed: {
     bg_url(){
       let img_url = this.$store.state.setting.data[0]
-      return img_url == null ? "": img_url.website_cover.home
+      return img_url == null ? "": img_url.website_cover[this.page]
     }
   },
 }

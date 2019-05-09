@@ -67,6 +67,10 @@ export default {
   api_get_article_list(data){
     return instance.get(`/api/admin/article/list?current_page=${data.current_page}&page_size=${data.page_size}&keyword=${data.keyword}&tag=${data.tag}&state=${data.state}`)
   },
+  // 文章修改
+  api_alter_article(data){
+    return instance.patch(`/api/admin/article/edit/${data._id}`, data)
+  },
   // 通过文章id来获取文章
   api_get_article(id){
     return instance.get(`/api/admin/article/get/${id}`);

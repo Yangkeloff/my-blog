@@ -353,7 +353,7 @@ module.exports = {
         return
       }
 
-      res = await articleModel.update(_id, {
+      res = await articleQuery.update(_id, {
         article_title,
         article_tags,
         article_state,

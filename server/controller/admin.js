@@ -76,7 +76,7 @@ module.exports = {
       }
       let res = await Admin.find({
         admin_name,
-        admin_pwd
+        admin_pwd: sha1(sha1(admin_pwd + SHA1_ADD_STR))
       })
       if (res.length == 0) {
         ctx.body = {

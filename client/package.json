@@ -10,7 +10,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "gitalk": "^1.5.0",
+    "github-markdown-css": "^3.0.1",
+    "highlight.js": "^9.15.6",
     "iview": "^3.4.0",
+    "marked": "^0.6.2",
     "vue": "^2.6.10",
     "vue-meta-info": "^0.1.7",
     "vue-router": "^3.0.6",

@@ -10,5 +10,6 @@ router
   .get('/article_list', controller.article.get_article_list)
   .get('/get_tags', controller.article.get_tags)
   .get('/get_setting', controller.setting.get_setting)
+  .get('/article/:id', controller.article.get_article)
 
 module.exports = router
