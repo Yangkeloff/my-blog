@@ -23,12 +23,11 @@ export default {
           let gitalk = new Gitalk({
             clientID: 'f6275a87dc1325248fd3',
             clientSecret: '7c64678be24ce54fe7943030f9c1eaf2e84bfcd1',
-            repo: 'blog',
-            owner: 'Du Yang',
-            admin: ['Du Yang'],
+            repo: 'my-blog',
+            owner: 'yangkeloff',
+            admin: ['yangkeloff'],
             id: md5(window.location.href),
             distractionFreeMode: false,
-            labels: ['blog.lcylove.cn'],
             body: '文章地址：' + window.location.href
           })
           gitalk.render('gitalk_comment')
@@ -42,12 +41,11 @@ export default {
         let gitalk = new Gitalk({
           clientID: 'f6275a87dc1325248fd3',
           clientSecret: '7c64678be24ce54fe7943030f9c1eaf2e84bfcd1',
-          repo: 'blog',
-          owner: 'Du Yang',
-          admin: ['Du Yang'],
+          repo: 'my-blog',
+          owner: 'yangkeloff',
+          admin: ['yangkeloff'],
           id: md5(window.location.href),
           distractionFreeMode: false,
-          labels: ['blog.lcylove.cn'],
           body: '文章地址：' + window.location.href,
           title: newVal + " | PAWNs'blog"
         })

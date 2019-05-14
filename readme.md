@@ -42,4 +42,6 @@ This query will select all documents in the inventory collection where either th
     - 完整地触发组件的生命周期钩子
     - 触发过渡
     > key 的特殊属性主要用在 Vue 的虚拟 DOM 算法，在新旧 nodes 对比时辨识 VNodes。如果不使用 key，Vue 会使用一种最大限度减少动态元素并且尽可能的尝试修复/再利用相同类型元素的算法。使用 key，它会基于 key 的变化重新排列元素顺序，并且会移除 key 不存在的元素。有相同父元素的子元素必须有独特的 key。重复的 key 会造成渲染错误。
-    
+3. Vue报错：Uncaught TypeError: Cannot assign to read only property’exports‘ of object’#<Object>‘的解决方法  
+    - 在webpack打包的时候,可以在js文件中混用`require`和`export`,但是不能混用`import`以及`module.exports`
+    - 统一改成ES6的方式编写即可
