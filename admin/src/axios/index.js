@@ -48,7 +48,7 @@ export default {
   },
   //标签
   api_get_tags(){
-    return instance.get("/api/admin/tags/get");
+    return instance.get("/api/admin/tags/get")
   },
   api_add_tags(data){
     return instance.post('/api/admin/tags/add',data)
@@ -62,7 +62,7 @@ export default {
 
   //文章
   api_add_article(data){
-    return instance.post('/api/admin/article/add', data);
+    return instance.post('/api/admin/article/add', data)
   },
   api_get_article_list(data){
     return instance.get(`/api/admin/article/list?current_page=${data.current_page}&page_size=${data.page_size}&keyword=${data.keyword}&tag=${data.tag}&state=${data.state}`)
@@ -73,22 +73,40 @@ export default {
   },
   // 通过文章id来获取文章
   api_get_article(id){
-    return instance.get(`/api/admin/article/get/${id}`);
+    return instance.get(`/api/admin/article/get/${id}`)
   },
   api_del_article(id){
-    return instance.delete(`/api/admin/article/del/${id}`);
+    return instance.delete(`/api/admin/article/del/${id}`)
   },
 
+  //作品
+  // 获取作品列表
+  api_get_work(){
+    return instance.get('/api/client/get_works')
+  },
+  // 修改作品信息
+  api_alter_work(data){
+    return instance.patch(`/api/admin/edit_work/${data._id}`, data)
+  },
+  // 添加作品信息
+  api_add_work(data){
+    return instance.post('/api/admin/add_work', data)
+  },
+  // 删除作品
+  api_del_work(data){
+    return instance.delete(`/api/admin/del_work/${data._id}`)
+  },
+  
   //设置
   // 获取全局设置
   api_get_setting(){
-    return instance.get('/api/admin/setting/get');
+    return instance.get('/api/admin/setting/get')
   },
   // 修改全局设置
   api_alter_setting(data){
-    return instance.patch('/api/admin/setting/edit', data);
+    return instance.patch('/api/admin/setting/edit', data)
   },
   api_alter_admin(data) {
-    return instance.patch('/api/admin/edit', data);
+    return instance.patch('/api/admin/edit', data)
   },
 }

@@ -120,9 +120,6 @@
 .tags_page 
   .tool
   .tags_list
-    .btn
-      btn-dark()
-  .tags_list
     .tags_item_th 
       color #23292F
       font-weight bold

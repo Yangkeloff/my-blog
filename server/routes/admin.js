@@ -20,4 +20,7 @@ router
   .delete('/article/del/:id', controller.article.del_article)
   .get('/setting/get', controller.setting.get_setting)
   .patch('/setting/edit', controller.setting.edit_setting)
+  .patch('/edit_work', controller.work.edit_work)
+  .post('/add_work', controller.work.add_work)
+  .delete('/del_work', controller.work.del_work)
 module.exports = router

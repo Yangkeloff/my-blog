@@ -66,6 +66,4 @@ export default {
     text-align right
     button + button 
       margin-left 20px !important
-    .btn
-      btn-dark()
 </style>

@@ -1,10 +1,8 @@
 <template>
   <div>
     <Header></Header>
-    <main class="home">
-      <BgImg :page="page" :key="bgKey"></BgImg>
-      <router-view class="content" @pageChanged="pageChanged"></router-view>
-    </main>
+    <BgImg :page="page" :key="bgKey"></BgImg>
+    <router-view class="content" @pageChanged="pageChanged"></router-view>
     <Footer></Footer>
   </div>  
 </template>
@@ -35,11 +33,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.home
-  font-size 0.4rem
-  .page_container 
-    width 100%
-    margin 0 auto 
-    @media screen and (min-width: 1250px)
-      width 1250px
+  
 </style>

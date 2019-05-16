@@ -165,8 +165,6 @@ export default {
 @import '~asset/stylus/base.styl'
 .article_page 
   box-sizing: border-box
-  .btn
-    btn-dark()
   ul,li 
     list-style none
   .search_box 

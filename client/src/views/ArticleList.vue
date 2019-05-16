@@ -32,7 +32,7 @@ export default {
       title: '首页 | Yang\'s blog', // set a title
       meta: [{                 // set meta
         name: 'keyWords',
-        content: '杜洋的博客'
+        content: 'yangkeloff的博客'
       }]
     }
   },
@@ -125,8 +125,11 @@ export default {
     .article_list 
       margin-bottom 20px
       overflow hidden
-      .article_item 
-        width 33%
+      .article_item
+        @media screen and (min-width: 950px)
+          width 50%
+        @media screen and (min-width: 1250px)
+          width 33%
       .msg 
         padding-left 20px
         margin-top 30px

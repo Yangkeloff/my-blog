@@ -39,6 +39,13 @@ const routes = [
         component: () => import('@/views/Tags')
       },
       {
+        path: 'works',
+        meta:{
+          requiresAuth:true
+        },
+        component: () => import('@/views/Works')
+      },
+      {
         path: 'setting',
         meta:{
           requiresAuth:true

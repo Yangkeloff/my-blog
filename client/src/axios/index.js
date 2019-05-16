@@ -17,7 +17,7 @@ export default {
   },
   // 获取作品列表
   api_get_work(){
-    return instance.get('/api/client/work')
+    return instance.get('/api/client/get_works')
   },
   // 获取文章列表
   api_get_article_list(data){
@@ -42,6 +42,6 @@ export default {
   },
   // 获取归档列表
   api_get_archives(){
-    return instance.get('/api/client/archives')
+    return instance.get('/api/client/get_archives')
   }
 }

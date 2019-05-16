@@ -412,4 +412,28 @@ module.exports = {
       }
     }
   },
+  async get_archives(ctx) {
+    try {
+      let article_list = await Article.find({},{
+        article_title: true,
+        article_state: true,
+        article_create_time: true,
+        article_update_time: true
+      })
+      .sort({'article_create_time': '-1'});
+      ctx.body = {
+        code: 200,
+        msg: '归档查询成功！',
+        data: {
+          article_list
+        }
+      }
+    }catch(e){
+      console.log(e);
+      ctx.body = {
+        code: 500,
+        msg: '归档查询失败!'
+      }
+    }
+  }
 }

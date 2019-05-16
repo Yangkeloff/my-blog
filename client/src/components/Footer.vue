@@ -105,7 +105,7 @@ export default {
       font-size 22px
       padding 20px 0
     .to_box 
-      display none
+      display block
       z-index 1000
       position fixed
       bottom 70px

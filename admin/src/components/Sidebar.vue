@@ -11,6 +11,7 @@
     <ul class="nav">
       <li><router-link to="/admin/article">文章管理</router-link></li>
       <li><router-link to="/admin/tags">标签管理</router-link></li>
+      <li><router-link to="/admin/works">作品管理</router-link></li>
       <li><router-link to="/admin/setting">设置</router-link></li>
       <li><router-link to="/admin/new">写文章</router-link></li>
     </ul>
