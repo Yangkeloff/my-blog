@@ -21,8 +21,8 @@ export default {
       inserted(el){
         if(direct == true){
           let gitalk = new Gitalk({
-            clientID: 'f6275a87dc1325248fd3',
-            clientSecret: '7c64678be24ce54fe7943030f9c1eaf2e84bfcd1',
+            clientID: '565103516f4c64fdb1ca',
+            clientSecret: '1ed11dc9ff2228e9d09804e890bd94d60ffd87c3',
             repo: 'my-blog',
             owner: 'yangkeloff',
             admin: ['yangkeloff'],
@@ -39,15 +39,15 @@ export default {
     'title':  function(newVal, oldVal){
       if(newVal != null){
         let gitalk = new Gitalk({
-          clientID: 'f6275a87dc1325248fd3',
-          clientSecret: '7c64678be24ce54fe7943030f9c1eaf2e84bfcd1',
+          clientID: '565103516f4c64fdb1ca',
+          clientSecret: '1ed11dc9ff2228e9d09804e890bd94d60ffd87c3',
           repo: 'my-blog',
           owner: 'yangkeloff',
           admin: ['yangkeloff'],
           id: md5(window.location.href),
           distractionFreeMode: false,
           body: '文章地址：' + window.location.href,
-          title: newVal + " | PAWNs'blog"
+          title: newVal + " | yang's blog"
         })
         gitalk.render('gitalk_comment')
       }

@@ -10,7 +10,9 @@
         </div>
       </div>
       <CommentBox 
-      :title="article.article_title"></CommentBox>
+      :title="article.article_title"
+      :key = "commentKey"
+      ></CommentBox>
     </div>
     <div id="ok"></div>
     <div class="imgShow" v-close>
@@ -25,6 +27,11 @@ import CommentBox from '@/components/Comment_box'
 import {throttle,offsetTop,slowRoll} from '@/plugins/utils'
 
 export default {
+  data() {
+    return {
+      commentKey: 1
+    }
+  },
   metaInfo(){
     return {
       title: this.article.article_title + " | Yang's blog",
@@ -40,6 +47,7 @@ export default {
   components: {CommentBox},
   created(){
     let {id} = this.$route.params
+    this.commentKey = Math.random()
     this.$store.dispatch("get_article_api", id)
   },
   computed: {
