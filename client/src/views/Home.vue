@@ -3,7 +3,7 @@
     <Header></Header>
     <BgImg :page="page" :key="bgKey"></BgImg>
     <router-view class="content" @pageChanged="pageChanged"></router-view>
-    <Footer></Footer>
+    <Footer ref="footer"></Footer>
   </div>  
 </template>
 
@@ -26,9 +26,13 @@ export default {
   methods: {
     pageChanged(name) {
       this.page = name
-      ++this.bgKey
-    }
-  },
+      this.bgKey = name
+      console.log(this.$refs.footer)
+    },
+    // footer() {
+    //   console.log(this.$refs.footer)
+    // }
+  }
 }
 </script>
 

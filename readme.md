@@ -45,3 +45,6 @@ This query will select all documents in the inventory collection where either th
 3. Vue报错：Uncaught TypeError: Cannot assign to read only property’exports‘ of object’#<Object>‘的解决方法  
     - 在webpack打包的时候,可以在js文件中混用`require`和`export`,但是不能混用`import`以及`module.exports`
     - 统一改成ES6的方式编写即可
+4. Vue父组件调用子组件方法
+    - 子组件设置`ref="refName"`
+    - 父组件中调用`this.$refs.refName.[data/methods]`即可获得子组件data或调用子组件methods
