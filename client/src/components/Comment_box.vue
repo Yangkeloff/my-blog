@@ -16,6 +16,20 @@ export default {
   created(){
     direct = this.direct
   },
+  mounted() {
+    let gitalk = new Gitalk({
+      clientID: '565103516f4c64fdb1ca',
+      clientSecret: '1ed11dc9ff2228e9d09804e890bd94d60ffd87c3',
+      repo: 'my-blog',
+      owner: 'yangkeloff',
+      admin: ['yangkeloff'],
+      id: md5(window.location.href),
+      distractionFreeMode: false,
+      body: '文章地址：' + window.location.href,
+      title: this.title + " | yang's blog"
+    })
+    gitalk.render('gitalk_comment')
+  },
   directives:{
     initComment: {
       inserted(el){
@@ -35,24 +49,24 @@ export default {
       }
     }
   },
-  watch: {
-    'title':  function(newVal, oldVal){
-      if(newVal != null){
-        let gitalk = new Gitalk({
-          clientID: '565103516f4c64fdb1ca',
-          clientSecret: '1ed11dc9ff2228e9d09804e890bd94d60ffd87c3',
-          repo: 'my-blog',
-          owner: 'yangkeloff',
-          admin: ['yangkeloff'],
-          id: md5(window.location.href),
-          distractionFreeMode: false,
-          body: '文章地址：' + window.location.href,
-          title: newVal + " | yang's blog"
-        })
-        gitalk.render('gitalk_comment')
-      }
-    }
-  }
+  // watch: {
+  //   'title':  function(newVal, oldVal){
+  //     if(newVal != null){
+  //       let gitalk = new Gitalk({
+  //         clientID: '565103516f4c64fdb1ca',
+  //         clientSecret: '1ed11dc9ff2228e9d09804e890bd94d60ffd87c3',
+  //         repo: 'my-blog',
+  //         owner: 'yangkeloff',
+  //         admin: ['yangkeloff'],
+  //         id: md5(window.location.href),
+  //         distractionFreeMode: false,
+  //         body: '文章地址：' + window.location.href,
+  //         title: newVal + " | yang's blog"
+  //       })
+  //       gitalk.render('gitalk_comment')
+  //     }
+  //   }
+  // }
 }
 </script>
 

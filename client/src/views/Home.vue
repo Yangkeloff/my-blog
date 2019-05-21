@@ -27,11 +27,8 @@ export default {
     pageChanged(name) {
       this.page = name
       this.bgKey = name
-      console.log(this.$refs.footer)
-    },
-    // footer() {
-    //   console.log(this.$refs.footer)
-    // }
+      // console.log(this.$refs.footer)
+    }
   }
 }
 </script>

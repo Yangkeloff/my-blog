@@ -5,7 +5,7 @@
     </div>
     <div class="myInfo" v-html="page_html">
     </div>
-     <CommentBox
+    <CommentBox
     :direct="direct"></CommentBox>
   </div>
 </template>

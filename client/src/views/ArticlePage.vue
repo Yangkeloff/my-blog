@@ -11,7 +11,6 @@
       </div>
       <CommentBox 
       :title="article.article_title"
-      :key = "commentKey"
       ></CommentBox>
     </div>
     <div id="ok"></div>
@@ -27,11 +26,6 @@ import CommentBox from '@/components/Comment_box'
 import {throttle,offsetTop,slowRoll} from '@/plugins/utils'
 
 export default {
-  data() {
-    return {
-      commentKey: 1
-    }
-  },
   metaInfo(){
     return {
       title: this.article.article_title + " | Yang's blog",
