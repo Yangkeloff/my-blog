@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page_container 
   font-size 16px
   padding 0 10px
@@ -62,7 +62,7 @@ h1
   font-weight 400
   height 20px
   line-height 20px
-  font-size 18px
+  font-size 22px
   &::before 
     content ''
     display block
@@ -76,7 +76,7 @@ h1
     background linear-gradient(to bottom,#1a1818 35%,#353030 100%) left center no-repeat
     background-size 100%
 .myInfo p
-  font-size 16px
+  font-size 18px
   text-indent 2em
   line-height 30px
 .myInfo 

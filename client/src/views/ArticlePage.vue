@@ -142,7 +142,7 @@ export default {
 
 <style src="../assets/css/markdown.css"></style>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .article_box 
   .page_container 
     box-sizing border-box

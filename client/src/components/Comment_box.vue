@@ -17,20 +17,18 @@ export default {
     direct = this.direct
   },
   mounted() {
-    if(direct == false){
-      let gitalk = new Gitalk({
-        clientID: 'b7bcb4d28ab13ff8d743',
-        clientSecret: '238a6d133df2a9c6dfddaf7b222400fee58ce88b',
-        repo: 'my-blog',
-        owner: 'yangkeloff',
-        admin: ['yangkeloff'],
-        id: md5(window.location.href),
-        distractionFreeMode: false,
-        body: '文章地址：' + window.location.href,
-        title: this.title + " | yang's blog"
-      })
-      gitalk.render('gitalk_comment')
-    }
+    let gitalk = new Gitalk({
+      clientID: 'b7bcb4d28ab13ff8d743',
+      clientSecret: '238a6d133df2a9c6dfddaf7b222400fee58ce88b',
+      repo: 'my-blog',
+      owner: 'yangkeloff',
+      admin: ['yangkeloff'],
+      id: md5(window.location.href),
+      distractionFreeMode: false,
+      body: '文章地址：' + window.location.href,
+      title: this.title + " | yang's blog"
+    })
+    gitalk.render('gitalk_comment')
   },
   directives:{
     initComment: {
