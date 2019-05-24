@@ -1,15 +1,29 @@
 const path = require('path')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+const isProduction = process.env.NODE_ENV === 'production'
 
 function resolve(dir) {
   return path.join(__dirname, '.', dir)
 }
 
 module.exports = {
-  configureWebpack: {
-    resolve: {
-      alias: {
-        '@': resolve('src'),
-        'style': resolve('src/assets/stylus')
+  chainWebpack: config => {
+    config.resolve.alias
+      .set('@',resolve('src'))
+      .set('style', resolve('src/assets/stylus'))
+  },
+  configureWebpack: config => {
+    if (isProduction) {
+      config.plugins.push(new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      }))
+      config.externals = {
+        'vue': 'Vue',
+        'vue-router': 'VueRouter'
       }
     }
   },

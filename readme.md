@@ -259,6 +259,7 @@
     systemctl disable nginx.servicex
     ```
 3. 坑
+    #### 项目上线后的跨域问题
     在本地项目中,vue-cli解决跨域的方法是在vue.config.js中更改webpack.devServer的设置
     ```
     devServer: {
@@ -291,3 +292,50 @@
       proxy_cookie_domain localhost:80 http://xx.xx.xx.xx:5568;
     }
     ```
+
+    #### 解决vue-cli3 build包太大导致首屏过长
+    1. 路由懒加载
+    2. 通过CompressionWebpackPlugin插件build提供压缩
+        ```
+        // 安装插件
+        cnpm i --save-dev compression-webpack-plugin
+
+        // 在vue-config.js 中加入
+        const CompressionWebpackPlugin = require('compression-webpack-plugin');
+        const productionGzipExtensions = ['js', 'css'];
+        const isProduction = process.env.NODE_ENV === 'production';
+
+        .....
+        module.exports = {
+        ....
+          configureWebpack: config => {
+            if (isProduction) {
+              config.plugins.push(new CompressionWebpackPlugin({
+                algorithm: 'gzip',
+                test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+                threshold: 10240,
+                minRatio: 0.8
+              }))
+            }
+          }
+        }
+        ```
+    3. 启用CDN加速
+        用Gzip已把文件的大小减少了三分之二了,还可以把那些不太可能改动的代码或者库分离出来,继续减小单个chunk-vendors,然后通过CDN加载进行加速加载资源
+        ```
+        // 修改vue.config.js 分离不常用代码库
+        module.exports = {
+          configureWebpack: config => {
+            if (isProduction) {
+              config.externals = {
+                'vue': 'Vue',
+                'vue-router': 'VueRouter'
+              }
+            }
+          }
+        }
+        // 在public文件夹的index.html 加载
+        <!-- CDN -->
+        <script src="https://cdn.bootcss.com/vue/2.5.17/vue.runtime.min.js"></script>
+        <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
+        ```
