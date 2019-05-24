@@ -1,50 +1,293 @@
-## 运行
-### server
-`mongod`  
-``` 
-cd ./server
-npm i & cnpm i
-npm run dev
-```
-
-### client & admin
-```
-cd ./admin & cd ./client
-npm i & cnpm i
-npm run dev
-```
-
-## 涉及到的mongodb使用 
-
-### $in
->The $in operator selects the documents where the value of a field equals any value in the specified array. To specify an $in expression, use the following prototype
-
-```
-{ field: { $in: [<value1>, <value2>, ... <valueN> ] } }
-```
-If the field holds an array, then the $in operator selects the documents whose field holds an array that contains at least one element that matches a value in the specified array 
-### $or
->The $or operator performs a logical OR operation on an array of two or more <expressions> and selects the documents that satisfy at least one of the <expressions>. The $or has the following syntax
-
-Consider the following example:
-```
-db.inventory.find( { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] } )
-```
-This query will select all documents in the inventory collection where either the quantity field value is less than 20 or the price field value equals 10
-## 坑
-1. vue组件中引入外部styl文件需要在路径前加`~`,否则会报错
+## node
+1. 登录到服务器，更新yum  
     ```
-    @import '~asset/base.styl'
+    yum update -y
     ```
-    > stylus-loader can also take advantage of webpack's resolve options. With the default options it'll find files in web_modules as well as node_modules, make sure to prefix any lookup in node_modules with ~. For example if you have a styles package lookup files in it like @import '~styles/my-styles. 
-2. 优雅的重新渲染组件
-    在组件上绑定一个key,key的值更改时,组件便会重新渲染
-    - 完整地触发组件的生命周期钩子
-    - 触发过渡
-    > key 的特殊属性主要用在 Vue 的虚拟 DOM 算法，在新旧 nodes 对比时辨识 VNodes。如果不使用 key，Vue 会使用一种最大限度减少动态元素并且尽可能的尝试修复/再利用相同类型元素的算法。使用 key，它会基于 key 的变化重新排列元素顺序，并且会移除 key 不存在的元素。有相同父元素的子元素必须有独特的 key。重复的 key 会造成渲染错误。
-3. Vue报错：Uncaught TypeError: Cannot assign to read only property’exports‘ of object’#<Object>‘的解决方法  
-    - 在webpack打包的时候,可以在js文件中混用`require`和`export`,但是不能混用`import`以及`module.exports`
-    - 统一改成ES6的方式编写即可
-4. Vue父组件调用子组件方法
-    - 子组件设置`ref="refName"`
-    - 父组件中调用`this.$refs.refName.[data/methods]`即可获得子组件data或调用子组件methods
+2. 安装node  
+    wget下载node安装包
+    ```
+    wget https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz
+    ```
+    解压
+    ```
+    tar xvf node-v10.15.3.tar.gz
+    ```
+    创建软链接，使node和npm命令全局有效。通过创建软链接的方法，使得在任意目录下都可以直接使用node和npm命令
+    ```
+    ln -s /root/node-v10.15.3-linux-x64/bin/node /usr/local/bin/node
+    ln -s /root/node-v10.15.3-linux-x64/bin/npm /usr/local/bin/npm
+    ```
+    查看node、npm版本
+    ```
+    node -v
+    npm -v
+    ```
+3. 安装pm2
+    npm全局安装
+    ```
+    npm install pm2@latest -g
+    ```
+    创建软链接，使pm2命令全局有效、
+    ```
+    ln -s /root/node-v10.15.3-linux-x64/bin/pm2 /usr/local/bin/pm2
+    ```
+    pm2的项目结构
+    ```
+    $HOME/.pm2 will contain all PM2 related files  
+    $HOME/.pm2/logs will contain all applications logs，日志文件夹，你会看到app-error-0.log app-out-0.log等日志，以你起的应用名称开头，输出和报错  
+    $HOME/.pm2/pids will contain all applications pids  
+    $HOME/.pm2/pm2.log PM2 logs  
+    $HOME/.pm2/pm2.pid PM2 pid  
+    $HOME/.pm2/rpc.sock Socket file for remote commands  
+    $HOME/.pm2/pub.sock Socket file for publishable events  
+    $HOME/.pm2/conf.js PM2 Configuration  
+    ```
+4. pm2启动node
+    **Generate**
+      进入server(node,express,koa)文件夹
+      ```
+      pm2 ecosystem //将生成一个简单配置文件 ecosystem.config.js
+      ```
+    **Config**
+      ```
+      module.exports = {
+        /**
+        * Application configuration section
+        */
+        apps : [
+          // First application
+          {
+            name      : 'app_1',
+            script    : '/root/project_1/app.js',
+            // script为node文件入口,如koa2中为./bin/www
+            env: {
+              NODE_ENV: 'development'
+            },
+            env_production : {
+              NODE_ENV: 'production'
+            }
+          },
+          // Second application
+          {
+            name      : 'app_2',
+            script    : '/root/project_2/app.js',
+            instances : 4,
+            exec_mode : 'cluster',
+            env: {
+              NODE_ENV: 'production'
+            },
+            env_production : {
+              NODE_ENV: 'production'
+            }
+          },
+          // Third application
+          {
+            name      : 'app_3',
+            script    : '/root/project_3/master.js',
+            env: {
+              NODE_ENV: 'production'
+            },
+            env_production : {
+              NODE_ENV: 'production'
+            },
+            node_args: "--nouse-idle-notification --gc_global --max-old-space-size=2048"
+          }
+        ]
+      };
+      ```
+    **CLI**
+      ```
+      pm2 start ecosystem.config.js //启动所有的应用
+      pm2 start ecosystem.config.js --only app_1 //启动app_1
+      pm2 stop ecosystem.config.js [--only app_1] //停止
+      pm2 restart ecosystem.config.js [--only app_1] //重启
+      pm2 reload ecosystem.config.js [--only app_1] //重载
+      pm2 delete ecosystem.config.js [--only app_1] //移除
+      ```
+
+## mongodb
+1. 下载并解压
+    ```
+    cd /data/
+    curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.4.tgz
+    tar zxvf mongodb-linux-x86_64-4.0.4.tgz
+    ```
+2. 创建相关目录
+    ```
+    mv mongodb-linux-x86_64-4.0.4 mongodb
+    mkdir -p mongodb/{data/db,log}
+    mkdir -p /etc/mongodb
+    ```
+3. 创建配置文件
+    ```
+    vim /etc/mongodb/mgdb.conf
+    ```
+    ```
+    dbpath=/data/mongodb/data/db  #数据文件存放目录
+    logpath=/data/mongodb/log/mongodb.log  #日志文件存放目录
+    port=37485  #端口，默认27017，可以自定义
+    logappend=true  #开启日志追加添加日志
+    fork=true  #以守护程序的方式启用，即在后台运行
+    bind_ip=0.0.0.0  #本地监听IP，0.0.0.0表示本地所有IP
+    auth=true  #是否需要验证权限登录(用户名和密码)
+    ```
+4. 添加环境变量
+    ```
+    vim /etc/profile
+    ```
+    ```
+    export MONGODB_HOME=/data/mongodb
+    export PATH=$PATH:$MONGODB_HOME/bin
+    ```
+    使环境变量立即生效
+    ```
+    source /etc/profile
+    ```
+5. 创建mongodb启动配置文件
+    ```
+    vim /usr/lib/systemd/system/mongodb.service
+    ```
+    ```
+    [Unit]
+    Description=mongodb
+    After=network.target remote-fs.target nss-lookup.target
+
+    [Service]
+    Type=forking
+    RuntimeDirectory=mongodb
+    PIDFile=/data/mongodb/data/db/mongod.lock
+    ExecStart=/data/mongodb/bin/mongod --config /etc/mongodb/mgdb.conf
+    ExecStop=/data/mongodb/bin/mongod --shutdown --config /etc/mongodb/mgdb.conf
+    PrivateTmp=true
+
+    [Install]  
+    WantedBy=multi-user.target
+    ```
+6. 启动mongodb并加入开机启动
+    ```
+    systemctl daemon-reload
+    systemctl start mongodb
+    systemctl enable mongodb
+    ```
+7. 配置firewalld防火墙策略
+    ```
+    firewall-cmd --permanent --add-port=37485/tcp
+    firewall-cmd --reload
+    ```
+8. 测试
+    创建管理用户
+    ```
+    mongo --port 37485
+    ```
+    ```
+    mongo
+    > use admin
+    > db.createUser({user:"admin",pwd:"123456",roles:[{role:"userAdminAnyDatabase",db: "admin"}]})
+    > db.auth('admin','123456')
+    ```
+    创建测试用户
+    ```
+    > use test
+    > db.createUser({user:"yang",pwd:"123456",roles:[{role:"readWrite",db:"securitydata"}]})
+    > db.auth('yang','123456')
+    > exit
+    ```
+    用测试用户登陆
+    ```
+    mongo --port 37485 -u yang -p 123456
+    ```
+    
+## 静态文件
+1. 安装并配置nginx
+    安装nginx
+    ```
+    yum install nginx
+    ```
+    配置nginx
+    ```
+    cd /
+    cd etc/nginx
+    vim nginx.conf
+    ```
+    vim编辑器的简单使用
+    ```
+    i    编辑
+    Esc  退出编辑
+    :q   退出vim编辑器
+    :wq  保存并退出vim编辑器
+    ```
+    nginx.conf配置
+    ```
+    server {
+      listen       80 default_server;
+      listen       [::]:80 default_server;
+      server_name  _;
+      root         /var/www/my-blog/client/dist/; # 静态文件目录
+      index        index.html;
+
+      # Load configuration files for the default server block.
+      include /etc/nginx/default.d/*.conf;
+
+      location /api/ {
+          # 把 /api 路径下的请求转发给真正的后端服务器
+          proxy_pass http://172.21.0.13:3000/;
+      }
+
+      error_page 404 /404.html;
+          location = /40x.html {
+      }
+
+      error_page 500 502 503 504 /50x.html;
+          location = /50x.html {
+      }
+    }
+    ```
+2. 启动nginx
+    CentOS7.0+ nginx实现停止、启动、重启
+    ```
+    systemctl stop nginx.service  
+    systemctl start nginx.service
+    systemctl restart nginx.service
+    systemctl status nginx.service
+    ```
+    开机自启
+    ```
+    systemctl enable nginx.service
+    ```
+    取消开机自启
+    ```
+    systemctl disable nginx.servicex
+    ```
+3. 坑
+    在本地项目中,vue-cli解决跨域的方法是在vue.config.js中更改webpack.devServer的设置
+    ```
+    devServer: {
+      proxy: {
+        '/api':{  // 只代理 /api url下的请求
+          target: "http://localhost:3000/", // 后台服务器的地址
+          changeOrigin: true,
+          ws: true,
+          pathRewrite: {
+            '^/api': '' 
+            /* 如果接口中是没有api的，那就直接置空，
+            如果接口中有api，那就得写成{‘^/api’:‘/api’}
+            */
+          }
+        }
+      }
+    }
+    ```
+    而在服务端中,nginx使用的是webpack build出的静态文件,并不包含devServer的内容,所以需要对nginx的配置文件进行修改
+    ```
+    location /api/ {
+      # 把 /api 路径下的请求转发给真正的后端服务器
+      proxy_pass http://xx.xx.xx.xx:5568;
+
+      # 把host头传过去，后端服务程序将收到your.domain.name, 否则收到的是localhost:8080
+      proxy_set_header Host $http_host;
+      # 把cookie中的path部分从/api替换成/service
+      proxy_cookie_path /api /;
+      # 把cookie的path部分从localhost:8080替换成your.domain.name
+      proxy_cookie_domain localhost:80 http://xx.xx.xx.xx:5568;
+    }
+    ```
