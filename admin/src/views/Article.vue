@@ -61,7 +61,7 @@
         </li>
         <li class="article_state">{{item.article_state | formatState}}</li> 
         <div class="article_operation">
-          <button class="btn look"><a :href='"client-http-url"+item._id' target="_blank">查看</a></button>
+          <button class="btn look"><a :href='"blog.yangkeloff.cn/#/article/"+item._id' target="_blank">查看</a></button>
           <button class="btn alter" @click="alter(item)">修改</button>
           <button class="btn del" @click="del(item)">删除</button>
         </div>
