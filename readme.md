@@ -258,7 +258,7 @@
     ```
     systemctl disable nginx.servicex
     ```
-3. 坑
+## 坑
     #### 项目上线后的跨域问题
     在本地项目中,vue-cli解决跨域的方法是在vue.config.js中更改webpack.devServer的设置
     ```
@@ -318,6 +318,26 @@
               }))
             }
           }
+        }
+        ```
+        在服务器nginx.conf中设置开启gzip
+        ```
+        http:{
+          ...
+          server:{
+            ...
+            location ~ .*\.(html|js|css)$ {
+                gzip on;
+                gzip_static on;
+                gzip_min_length 1k;
+                gzip_http_version 1.1;
+                gzip_comp_level 9;
+                gzip_types  text/css application/javascript;
+                root /var/www/my-blog/client/dist;
+            }
+            ...
+          }
+          ...
         }
         ```
     3. 启用CDN加速
