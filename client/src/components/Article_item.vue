@@ -113,6 +113,7 @@ export default {
           font-size 12px
           margin-top 5px
       img 
+        object-fit contain
         width 100%
         transition transform linear .4s
       .layer 
