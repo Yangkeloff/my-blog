@@ -1,16 +1,25 @@
 const path = require('path')
-
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+const isProduction = process.env.NODE_ENV === 'production'
 function resolve(dir) {
   return path.join(__dirname, '.', dir)
 }
 
 module.exports = {
-  configureWebpack: {
-    resolve: {
-      alias: {
-        '@': resolve('src'),
-        'asset': resolve('src/assets')
-      }
+ chainWebpack: config => {
+   config.resolve.alias
+     .set('@',resolve('src'))      
+     .set('asset', resolve('src/assets'))
+  },
+  configureWebpack: config => {
+    if (isProduction) {
+      config.plugins.push(new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      }))
     }
   },
   devServer: {
@@ -21,7 +30,7 @@ module.exports = {
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          '^/api': '' 
+          '^/api': ''
           /* 如果接口中是没有api的，那就直接置空，
           如果接口中有api，那就得写成{‘^/api’:‘/api’}
           */

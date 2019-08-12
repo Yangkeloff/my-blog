@@ -17,7 +17,7 @@ export default {
 <style lang="stylus" scoped>
 .admin_page
   display flex
-  height 100vh
+  min-height 100vh
   overflow hidden
   .side
     width 200px

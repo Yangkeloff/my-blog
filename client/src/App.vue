@@ -18,7 +18,7 @@ body
   font-size 0.4rem  
   font-family "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
   .view 
-    height 100vh
+    min-height 100vh
     .page_container 
       width 100%
       margin 0 auto

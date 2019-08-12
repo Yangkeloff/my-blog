@@ -28,6 +28,7 @@ module.exports = {
     }
   },
   devServer: {
+    port: 8080,
     proxy: {
       '/api':{  // 只代理 /api url下的请求
         target: "http://localhost:3000/", // 后台服务器的地址

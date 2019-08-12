@@ -87,6 +87,7 @@ export default {
       min-height 200px
       overflow hidden
       position relative
+      display flex
       // line-height: 200px
       .article_time 
         position absolute
