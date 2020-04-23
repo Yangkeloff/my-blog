@@ -4,7 +4,8 @@
       <h1 class="title">个人信息</h1>
       <div class="form-item">
         <span class="form-title">关于我 HTML:</span>
-        <div v-html="parse_about_me_page" disabled @click="alter_myInfo_content('about_me_page',myInfo.about_me_page)"></div>
+        <div v-html="parse_about_me_page" disabled 
+        @click="alter_myInfo_content('about_me_page',myInfo.about_me_page)"></div>
       </div>
       <div class="form-tool">
         <button class="btn alter" @click="alter_myInfo">修改</button>
@@ -84,7 +85,7 @@ export default {
       this.$alert(msg)
       return
     }
-    this.myInfo = data[0].myInfo
+    this.myInfo = data[0].myInfo || {about_me_page: ''}
     this.website_cover = data[0].website_cover == null? this.website_cover: data[0].website_cover 
     this.other = data[0].other == null ? this.other: data[0].other
 
@@ -159,7 +160,7 @@ export default {
     LayerMD
   },
   computed: {
-    parse_about_me_page: function () {
+    parse_about_me_page() {
       return this.myInfo.about_me_page.replace(/\n/g,'<br/>')
     }
   }

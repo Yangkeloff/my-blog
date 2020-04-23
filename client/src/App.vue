@@ -19,7 +19,10 @@ body
   font-family "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
   .view 
     min-height 100vh
+    display flex
+    flex-direction column
     .page_container 
+      flex 1
       width 100%
       margin 0 auto
       padding 0 20px

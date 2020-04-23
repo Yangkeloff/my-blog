@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <BgImg :page="page" :key="bgKey"></BgImg>
-    <router-view class="content" @pageChanged="pageChanged"></router-view>
+    <router-view @pageChanged="pageChanged"></router-view>
     <Footer ref="footer"></Footer>
   </div>  
 </template>
@@ -34,5 +34,4 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  
 </style>

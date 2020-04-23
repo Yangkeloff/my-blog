@@ -43,6 +43,7 @@ export default {
 @import '~asset/stylus/base.styl'
 .layer_md 
   position fixed
+  overflow-y auto 
   left 0
   top 0
   width 100%

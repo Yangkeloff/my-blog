@@ -15,7 +15,7 @@
       </div>
     </div>  
     <div class="copyright">
-      <p>All rights reserved 2019 Yang ' s Blog !</p>
+      <p>All rights reserved 2019 Yang</p>
       <p>© {{ICP}}</p>
     </div>
   </footer>
@@ -93,9 +93,6 @@ export default {
 
 <style lang="stylus">
   .footer 
-    position relative
-    z-index 999
-    padding-top 40px
     .copyright 
       background #1a1818
       background linear-gradient(to right,#1a1818 35%,#353030 100%)
